@@ -1,0 +1,70 @@
+{
+  "type": "line",
+  "data": {
+    "labels": [],
+    "label1": {{API_LABEL1}},
+    "label2": {{API_LABEL2}},
+    "datasets": [
+      {
+        "borderColor": "rgb(255, 99, 132)",
+        "borderWidth": 1,
+        "data": {{API_TEMP}},
+        "fill": false,
+        "yAxisID": "axis-temp"
+      },
+      {
+        "borderColor": "rgb(54, 162, 235)",
+        "borderWidth": 1,
+        "data": {{API_HUM}},
+        "fill": false,
+        "yAxisID": "axis-hum"
+      },
+      {
+        "borderColor": "rgb(255, 205, 86)",
+        "borderWidth": 1,
+        "data": {{API_PRES}},
+        "fill": false,
+        "yAxisID": "axis-pres"
+      }
+    ]
+  },
+  "options": {
+    "legend": {
+      "display": false
+    },
+    "scales": {
+      "yAxes": [
+        {
+          "scaleLabel": {
+            "display": true,
+            "labelString": "Temperature (°C)"
+          },
+          "type": "linear",
+          "display": true,
+          "position": "left",
+          "id": "axis-temp"
+        },
+        {
+          "scaleLabel": {
+            "display": true,
+            "labelString": "Humidity (%)"
+          },
+          "type": "linear",
+          "display": true,
+          "position": "right",
+          "id": "axis-hum"
+        },
+        {
+          "scaleLabel": {
+            "display": true,
+            "labelString": "Pressure (hPa)"
+          },
+          "type": "linear",
+          "display": true,
+          "position": "right",
+          "id": "axis-pres"
+        }
+      ]
+    }
+  }
+}

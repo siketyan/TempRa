@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Temp Monitor</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4" align="center" style="padding: 20px 10px">
+          <h2><i class="fa fa-thermometer-three-quarters"></i></h2>
+          <span class="num-large" id="tl"></span>
+          <span class="num-small" id="ts"></span>
+        </div>
+        <div class="col-md-4" align="center" style="padding: 20px 10px">
+          <h2><i class="fa fa-tint"></i></h2>
+          <span class="num-large" id="hl"></span>
+          <span class="num-small" id="hs"></span>
+        </div>
+        <div class="col-md-4" align="center" style="padding: 20px 10px">
+          <h2><i class="fa fa-tachometer"></i></h2>
+          <span class="num-large" id="pl"></span>
+          <span class="num-small" id="ps"></span>
+        </div>
+      </div>
+      <br>
+      <canvas id="graph"></canvas>
+    </div>
+
+    <script>
+      var apiType = "hour";
+
+      var labelFormatRecord = "{{FORMAT_RECORD}}";
+      var labelFormatHour = "{{FORMAT_HOUR}}";
+      var labelFormatDay = "{{FORMAT_DAY}}";
+      var labelFormatMonth = "{{FORMAT_MONTH}}";
+      var labelFormatYear = "{{FORMAT_YEAR}}";
+
+      var temp = "{{NOW_TEMP}}";
+      var hum = "{{NOW_HUM}}";
+      var pres = "{{NOW_PRES}}";
+    </script>
+    <script src="js/jquery-3.2.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/Chart.min.js"></script>
+    <script src="js/utils.min.js"></script>
+    <script src="js/monitor.min.js"></script>
+  </body>
+</html>
