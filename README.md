@@ -36,7 +36,7 @@ Format_Year={{STR1}}
 Twitter_DateFormat=yyyy/M/d H:mm
 Twitter_Content=Now: {{DATE}}\n \
                 \n \
-                Temperature: {{TEMP}} °C\n \
+                Temperature: {{TEMP}} °C\n \
                 Humidity: {{HUM}} %\n \
                 Pressure: {{PRES}} hPa\n \
                 \n \
@@ -54,6 +54,12 @@ Finally, type the command to run:
 ```bash
 java -jar TempMonitor-1.0.jar
 ```
+
+## Web Console
+Type the address of your Raspberry Pi and specificed port number to access the console.  
+e.g.)  
+  `http://192.168.11.81:8080/` _# By IP address_  
+  `http://raspberry:8080/` _# By hostname_
 
 ## Open Source Licenses
 - [Pi4J](http://www.pi4j.com/)
