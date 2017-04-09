@@ -1,5 +1,10 @@
 # TempMonitor
-Monitor the temperature, the humidity and the pressure in your room on Raspberry Pi.
+Monitors the temperature, the humidity and the pressure in your room on Raspberry Pi.
+
+## Features
+- Monitors every 10 minutes and insert into MySQL database.
+- Displays a graph and realtime data on the web browser.
+- Tweets the data every hour automatically.
 
 ## Requirements
 - Raspberry Pi (Tested on RPi 2 Model B)
@@ -8,7 +13,7 @@ Monitor the temperature, the humidity and the pressure in your room on Raspberry
 - BME280 temperature/humidity/pressure module
 
 ## Usage
-Before running, you have to place the config files below on the same directory.
+Before running, you have to put the config files below into the same directory.
 - monitor.properties
 ```properties
 SQL_Type=mysql
@@ -31,7 +36,7 @@ Format_Year={{STR1}}
 Twitter_DateFormat=yyyy/M/d H:mm
 Twitter_Content=Now: {{DATE}}\n \
                 \n \
-                Temperature: {{TEMP}} °C\n \
+                Temperature: {{TEMP}} °C\n \
                 Humidity: {{HUM}} %\n \
                 Pressure: {{PRES}} hPa\n \
                 \n \
@@ -44,7 +49,8 @@ oauth.consumerSecret=[YOUR TWITTER CONSUMER SECRET HERE]
 oauth.accessToken=[YOUR TWITTER ACCESS TOKEN HERE]
 oauth.accessTokenSecret=[YOUR TWITTER ACCESS TOKEN SECRET HERE]
 ```
-Type the command to run:
+Next, import [setup.sql](https://raw.githubusercontent.com/Siketyan/TempMonitor/master/setup.sql) into you database.  
+Finally, type the command to run:
 ```bash
 java -jar TempMonitor-1.0.jar
 ```
