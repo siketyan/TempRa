@@ -31,3 +31,32 @@ canvas {
     font-size: 3em;
     font-family: "Lato", sans-serif;
 }
+
+.nav-tabs {
+    border-bottom: none;
+    float: right;
+    margin: 0 5px 20px 0;
+}
+
+.nav-tabs > li > a {
+    border: none;
+    color: #FFF;
+    font-size: 1.1em;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:focus,
+.nav-tabs > li.active > a:hover {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #FFF;
+    color: #FFF;
+}
+
+.nav-tabs > li > a:hover {
+    background-color: transparent;
+}
+
+.tab-content {
+    clear: both;
+}
