@@ -1,5 +1,6 @@
 package io.github.siketyan.monitor.socket;
 
+import io.github.siketyan.monitor.TempMonitor;
 import io.github.siketyan.monitor.task.SocketTask;
 import io.github.siketyan.monitor.util.Logger;
 
@@ -11,8 +12,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 public class SessionManager {
-    private static final int SEND_SPAN = 1000;
-    
     private static SessionManager instance = new SessionManager();
     private static ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private static SocketTask task = new SocketTask();
@@ -25,7 +24,14 @@ public class SessionManager {
         sessions.add(socket);
         
         if (!isTaskRunning) {
-            future = scheduler.scheduleWithFixedDelay(task, 0, SEND_SPAN, TimeUnit.MILLISECONDS);
+            future = scheduler.scheduleWithFixedDelay(
+                         task, 0,
+                         Integer.parseInt(
+                             TempMonitor.getConfig()
+                                        .getProperty("Socket_Interval", "1000")
+                         ),
+                         TimeUnit.MILLISECONDS
+                     );
             isTaskRunning = true;
             
             Logger.info("WebSocket task started.");
