@@ -13,7 +13,8 @@ Monitors the temperature, the humidity and the pressure in your room on Raspberr
 - BME280 temperature/humidity/pressure module
 
 ## Usage
-Before running, you have to put the config files below into the same directory.
+First, connect your BME280 to your Raspberry Pi with I2C.  
+Before running, you have to put the config files below into the same directory as the jar file.
 - monitor.properties
 ```properties
 SQL_Type=mysql
@@ -24,6 +25,7 @@ SQL_User=[YOUR SQL USERNAME HERE]
 SQL_Password=[YOUR SQL PASSWORD HERE]
 SQL_Timeout=1
 
+Socket_Interval=1000
 Socket_Port=8888
 HTTP_Port=8080
 
@@ -52,7 +54,7 @@ oauth.accessTokenSecret=[YOUR TWITTER ACCESS TOKEN SECRET HERE]
 Next, import [setup.sql](https://raw.githubusercontent.com/Siketyan/TempMonitor/master/setup.sql) into you database.  
 Finally, type the command to run:
 ```bash
-java -jar TempMonitor-1.0.jar
+java -jar TempMonitor-x.x-jar-with-dependencies.jar
 ```
 
 ## Web Console
