@@ -1,33 +1,10 @@
 setData(temp, hum, pres);
 
-var apiReq = new XMLHttpRequest();
-apiReq.onreadystatechange = function() {
-  if (this.readyState === 4 && this.status === 200) {
-    if (this.response) {
-      var format = selectFormat(apiType);
-      var obj = {
-        type: this.response.type,
-        data: {
-          labels: [],
-          datasets: this.response.data.datasets
-        },
-        options: this.response.options
-      };
-      
-      for (var i = 0; i < this.response.data.label1.length; i++) {
-        obj.data.labels.push(
-          format.replace("{{STR1}}", this.response.data.label1[i])
-                .replace("{{STR2}}", this.response.data.label2[i])
-        );
-      }
-      
-      new Chart($("#graph"), obj);
-    }
-  }
-};
-apiReq.open('GET', 'api.json?type=' + apiType, true);
-apiReq.responseType = 'json';
-apiReq.send(null);
+drawGraph("record");
+drawGraph("hour");
+drawGraph("day");
+drawGraph("month");
+drawGraph("year");
 
 var con = new WebSocket("ws://" + location.hostname + ":{{SOCKET_PORT}}/");
 con.onmessage = function(e) {
@@ -57,4 +34,35 @@ function selectFormat(type) {
     case "month": return labelFormatMonth;
     case "year": return labelFormatYear;
   }
+}
+
+function drawGraph(type) {
+  var apiReq = new XMLHttpRequest();
+  apiReq.onreadystatechange = function() {
+    if (this.readyState === 4 && this.status === 200) {
+      if (this.response) {
+        var format = selectFormat(type);
+        var obj = {
+          type: this.response.type,
+          data: {
+            labels: [],
+            datasets: this.response.data.datasets
+          },
+          options: this.response.options
+        };
+        
+        for (var i = 0; i < this.response.data.label1.length; i++) {
+          obj.data.labels.push(
+            format.replace("{{STR1}}", this.response.data.label1[i])
+              .replace("{{STR2}}", this.response.data.label2[i])
+          );
+        }
+        
+        new Chart($("#graph-" + type), obj);
+      }
+    }
+  };
+  apiReq.open('GET', 'api.json?type=' + type, true);
+  apiReq.responseType = 'json';
+  apiReq.send(null);
 }

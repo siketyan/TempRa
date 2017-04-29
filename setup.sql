@@ -43,3 +43,12 @@ CREATE TABLE `months` (
   `pres` float NOT NULL,
   PRIMARY KEY (`id`)
 ) DEFAULT CHARSET=utf8;
+
+CREATE TABLE `years` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `year` smallint(4) NOT NULL,
+  `temp` float NOT NULL,
+  `hum` float NOT NULL,
+  `pres` float NOT NULL,
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8;

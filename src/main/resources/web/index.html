@@ -28,8 +28,47 @@
           <span class="num-small" id="ps"></span>
         </div>
       </div>
-      <br>
-      <canvas id="graph"></canvas>
+      <div>
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation">
+            <a href="#record" role="tab"
+               aria-controls="record" data-toggle="tab">Minutes</a>
+          </li>
+          <li role="presentation" class="active">
+            <a href="#hour" role="tab"
+               aria-controls="hour" data-toggle="tab">Hours</a>
+          </li>
+          <li role="presentation">
+            <a href="#day" role="tab"
+               aria-controls="day" data-toggle="tab">Days</a>
+          </li>
+          <li role="presentation">
+            <a href="#month" role="tab"
+               aria-controls="month" data-toggle="tab">Months</a>
+          </li>
+          <li role="presentation">
+            <a href="#year" role="tab"
+               aria-controls="year" data-toggle="tab">Years</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade" id="record">
+            <canvas id="graph-record"></canvas>
+          </div>
+          <div role="tabpanel" class="tab-pane fade active in" id="hour">
+            <canvas id="graph-hour"></canvas>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="day">
+            <canvas id="graph-day"></canvas>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="month">
+            <canvas id="graph-month"></canvas>
+          </div>
+          <div role="tabpanel" class="tab-pane fade" id="year">
+            <canvas id="graph-year"></canvas>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script>
