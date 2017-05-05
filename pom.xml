@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.siketyan</groupId>
     <artifactId>monitor</artifactId>
-    <version>1.1</version>
+    <version>1.1.1</version>
     <dependencies>
         <dependency>
             <groupId>com.pi4j</groupId>
