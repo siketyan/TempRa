@@ -142,7 +142,7 @@ public class CronTask implements Runnable {
              */
     
             cal.setTime(now);
-            if (cal.get(Calendar.HOUR) != 0) return;
+            if (cal.get(Calendar.HOUR_OF_DAY) != 0) return;
             double dTemp, dHum, dPres;
             cal.add(Calendar.DATE, -1);
     
