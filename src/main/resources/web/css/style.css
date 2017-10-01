@@ -1,15 +1,3 @@
-@font-face {
-    font-family: "Lato";
-    src: url("../fonts/Lato-Thin.eot");
-    src: url("../fonts/Lato-Thin.eot?#iefix") format("embedded-opentype"),
-         url("../fonts/Lato-Thin.woff2") format("woff2"),
-         url("../fonts/Lato-Thin.woff") format("woff"),
-         url("../fonts/Lato-Thin.ttf") format("truetype");
-    font-style: normal;
-    font-weight: normal;
-    text-rendering: optimizeLegibility;
-}
-
 body {
     background-color: #272727;
     color: #fff;
