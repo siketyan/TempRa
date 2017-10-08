@@ -14,11 +14,11 @@ class APIHandler {
     private static final String DAY_TABLE = "days";
     private static final String MONTH_TABLE = "months";
     private static final String YEAR_TABLE = "years";
-    private static final String RECORD_SELECT = "SELECT GROUP_CONCAT('\"',q.hour,'\"' ORDER BY q.id ASC),GROUP_CONCAT('\"',q.minute,'\"' ORDER BY q.id ASC)";
-    private static final String HOUR_SELECT = "SELECT GROUP_CONCAT('\"',q.day,'\"' ORDER BY q.id ASC),GROUP_CONCAT('\"',q.hour,'\"' ORDER BY q.id ASC)";
-    private static final String DAY_SELECT = "SELECT GROUP_CONCAT('\"',q.month,'\"' ORDER BY q.id ASC),GROUP_CONCAT('\"',q.day,'\"' ORDER BY q.id ASC)";
-    private static final String MONTH_SELECT = "SELECT GROUP_CONCAT('\"',q.year,'\"' ORDER BY q.id ASC),GROUP_CONCAT('\"',q.month,'\"' ORDER BY q.id ASC)";
-    private static final String YEAR_SELECT = "SELECT GROUP_CONCAT('\"',q.year,'\"' ORDER BY q.id ASC),''";
+    private static final String RECORD_SELECT = "SELECT GROUP_CONCAT(q.hour ORDER BY q.id ASC),GROUP_CONCAT(q.minute ORDER BY q.id ASC)";
+    private static final String HOUR_SELECT = "SELECT GROUP_CONCAT(q.day ORDER BY q.id ASC),GROUP_CONCAT(q.hour ORDER BY q.id ASC)";
+    private static final String DAY_SELECT = "SELECT GROUP_CONCAT(q.month ORDER BY q.id ASC),GROUP_CONCAT(q.day ORDER BY q.id ASC)";
+    private static final String MONTH_SELECT = "SELECT GROUP_CONCAT(q.year ORDER BY q.id ASC),GROUP_CONCAT(q.month ORDER BY q.id ASC)";
+    private static final String YEAR_SELECT = "SELECT GROUP_CONCAT(q.year ORDER BY q.id ASC),''";
     private static final String SUB_QUERY = ",GROUP_CONCAT(q.temp ORDER BY q.id ASC),GROUP_CONCAT(q.hum ORDER BY q.id ASC),GROUP_CONCAT(q.pres ORDER BY q.id ASC) "
         + "FROM (SELECT * FROM {{TABLE}} ORDER BY id DESC limit 24) q;";
     

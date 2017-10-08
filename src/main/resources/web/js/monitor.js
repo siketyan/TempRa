@@ -118,9 +118,13 @@ function drawGraph(type) {
       obj.data.datasets[2].data = res.data[2];
 
       for (var i = 0; i < res.label1.length; i++) {
+        var label1 = res.label1[i];
+        var label2 = res.label2[i];
+        if (type === "record" && label2 === 0) label2 = "00";
+
         obj.data.labels.push(
-          format.replace("{{STR1}}", res.label1[i])
-                .replace("{{STR2}}", res.label2[i])
+          format.replace("{{STR1}}", String(label1))
+                .replace("{{STR2}}", String(label2))
         );
       }
 
