@@ -3,11 +3,20 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="apple-mobile-web-app-title" content="Temp Monitor">
+    <meta name="application-name" content="Temp Monitor">
+    <meta name="theme-color" content="#272727">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Temp Monitor</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="mask-icon" href="safari-pinned-tab.svg" color="#272727">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.min.css">
+    <script src="https://use.typekit.net/rrq5rlq.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
   </head>
   <body>
     <div class="container">
@@ -31,6 +40,10 @@
       <div>
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation">
+            <a href="#realtime" role="tab"
+               aria-controls="realtime" data-toggle="tab">Realtime</a>
+          </li>
+          <li role="presentation">
             <a href="#record" role="tab"
                aria-controls="record" data-toggle="tab">Minutes</a>
           </li>
@@ -52,6 +65,9 @@
           </li>
         </ul>
         <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade" id="realtime">
+            <canvas id="graph-realtime"></canvas>
+          </div>
           <div role="tabpanel" class="tab-pane fade" id="record">
             <canvas id="graph-record"></canvas>
           </div>
@@ -69,25 +85,18 @@
           </div>
         </div>
       </div>
+      <div id="copyright">
+        <small>
+          Copyright &copy; 2017 Siketyan.<br>
+          Source codes are available on <a href="https://github.com/Siketyan/TempMonitor" target="_blank">GitHub</a>.
+        </small>
+      </div>
     </div>
 
-    <script>
-      var apiType = "hour";
-
-      var labelFormatRecord = "{{FORMAT_RECORD}}";
-      var labelFormatHour = "{{FORMAT_HOUR}}";
-      var labelFormatDay = "{{FORMAT_DAY}}";
-      var labelFormatMonth = "{{FORMAT_MONTH}}";
-      var labelFormatYear = "{{FORMAT_YEAR}}";
-
-      var temp = "{{NOW_TEMP}}";
-      var hum = "{{NOW_HUM}}";
-      var pres = "{{NOW_PRES}}";
-    </script>
-    <script src="js/jquery-3.2.0.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/Chart.min.js"></script>
-    <script src="js/utils.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+    <script src="https://use.fontawesome.com/ceedaf176e.js"></script>
     <script src="js/monitor.min.js"></script>
   </body>
 </html>

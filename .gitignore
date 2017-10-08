@@ -4,3 +4,4 @@ target
 
 # Files
 *.iml
+/node_modules/
