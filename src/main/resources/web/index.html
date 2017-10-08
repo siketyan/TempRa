@@ -40,6 +40,10 @@
       <div>
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation">
+            <a href="#realtime" role="tab"
+               aria-controls="realtime" data-toggle="tab">Realtime</a>
+          </li>
+          <li role="presentation">
             <a href="#record" role="tab"
                aria-controls="record" data-toggle="tab">Minutes</a>
           </li>
@@ -61,6 +65,9 @@
           </li>
         </ul>
         <div class="tab-content">
+          <div role="tabpanel" class="tab-pane fade" id="realtime">
+            <canvas id="graph-realtime"></canvas>
+          </div>
           <div role="tabpanel" class="tab-pane fade" id="record">
             <canvas id="graph-record"></canvas>
           </div>

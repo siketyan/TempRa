@@ -1,3 +1,6 @@
+var charts = {};
+drawGraphs();
+
 getJSON(
   "",
   function (res) {
@@ -20,13 +23,37 @@ getJSON(
       } else {
         var data = e.data.split(",");
         setData(data[0], data[1], data[2]);
+
+        var chart = charts["realtime"];
+        chart.data.datasets[0].data.push(data[0]);
+        chart.data.datasets[1].data.push(data[1]);
+        chart.data.datasets[2].data.push(data[2]);
+
+        var length = chart.data.datasets[0].data.length;
+        if (length > 61) {
+          chart.data.datasets[0].data.shift();
+          chart.data.datasets[1].data.shift();
+          chart.data.datasets[2].data.shift();
+        } else {
+          chart.data.labels.unshift(periods[length - 1]);
+          chart.data.labels.pop();
+        }
+
+        chart.update();
       }
     };
   }
 );
 
-var charts = {};
-drawGraphs();
+var periods = [
+  "Now", "", "", "", "", "", "", "","", "",
+  "10s", "", "", "", "", "", "", "","", "",
+  "20s", "", "", "", "", "", "", "","", "",
+  "30s", "", "", "", "", "", "", "","", "",
+  "40s", "", "", "", "", "", "", "","", "",
+  "50s", "", "", "", "", "", "", "","", "",
+  "1m"
+];
 
 var template = {
   type: "line",
@@ -36,18 +63,21 @@ var template = {
       {
         borderColor: "rgb(255, 99, 132)",
         borderWidth: 1,
+        data: [],
         fill: false,
         yAxisID: "axis-temp"
       },
       {
         borderColor: "rgb(54, 162, 235)",
         borderWidth: 1,
+        data: [],
         fill: false,
         yAxisID: "axis-hum"
       },
       {
         borderColor: "rgb(255, 205, 86)",
         borderWidth: 1,
+        data: [],
         fill: false,
         yAxisID: "axis-pres"
       }
@@ -134,6 +164,7 @@ function updateGraph(type) {
 }
 
 function drawGraphs() {
+  drawGraph("realtime");
   drawGraph("record");
   drawGraph("hour");
   drawGraph("day");
@@ -142,19 +173,26 @@ function drawGraphs() {
 }
 
 function drawGraph(type) {
-  getJSON(
-    "?type=" + type,
-    function (res) {
-      var obj = $.extend(true, {}, template);
-      var format = res.format;
-      obj.data.datasets[0].data = res.data[0];
-      obj.data.datasets[1].data = res.data[1];
-      obj.data.datasets[2].data = res.data[2];
+  if (type === "realtime") {
+    var obj = $.extend(true, {}, template);
+    obj.data.labels = new Array(61);
+    obj.options.animation.duration = 0;
+    charts[type] = new Chart($("#graph-realtime"), obj);
+  } else {
+    getJSON(
+      "?type=" + type,
+      function (res) {
+        var obj = $.extend(true, {}, template);
+        var format = res.format;
+        obj.data.datasets[0].data = res.data[0];
+        obj.data.datasets[1].data = res.data[1];
+        obj.data.datasets[2].data = res.data[2];
 
-      addLabels(type, format, res.label1, res.label2, obj.data.labels);
-      charts[type] = new Chart($("#graph-" + type), obj);
-    }
-  );
+        addLabels(type, format, res.label1, res.label2, obj.data.labels);
+        charts[type] = new Chart($("#graph-" + type), obj);
+      }
+    );
+  }
 }
 
 function addLabels(type, format, labels1, labels2, labels) {
