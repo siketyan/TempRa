@@ -46,34 +46,37 @@ public class HTTPHandler extends AbstractHandler {
             res.setStatus(404);
             return;
         }
-        
-        String[] apiData =
-            target.startsWith("/api.json")
-                ? api.handle(getAPIType(req.getParameter("type")))
-                : new String[5];
-    
-        if (mime.startsWith("text") || mime.equals("application/json")) {
-            try (InputStream is = TempMonitor.class.getResourceAsStream(TempMonitor.HTTP_SOURCE + target);
-                 BufferedReader br = new BufferedReader(new InputStreamReader(is, "UTF-8"));
-                 PrintWriter bw = res.getWriter()) {
-                String line;
-                while ((line = br.readLine()) != null)
+
+        if (target.startsWith("/api.json")) {
+            try (PrintWriter bw = res.getWriter()) {
+                String typeParam = req.getParameter("type");
+
+                if (typeParam == null) {
                     bw.println(
-                        line.replaceAll("\\{\\{NOW_TEMP}}", String.valueOf(ds.getTemperature()))
-                            .replaceAll("\\{\\{NOW_HUM}}", String.valueOf(ds.getHumidity()))
-                            .replaceAll("\\{\\{NOW_PRES}}", String.valueOf(ds.getPressure()))
-                            .replaceAll("\\{\\{FORMAT_RECORD}}", conf.getProperty("Format_Record"))
-                            .replaceAll("\\{\\{FORMAT_HOUR}}", conf.getProperty("Format_Hour"))
-                            .replaceAll("\\{\\{FORMAT_DAY}}", conf.getProperty("Format_Day"))
-                            .replaceAll("\\{\\{FORMAT_MONTH}}", conf.getProperty("Format_Month"))
-                            .replaceAll("\\{\\{FORMAT_YEAR}}", conf.getProperty("Format_Year"))
-                            .replaceAll("\\{\\{SOCKET_PORT}}", conf.getProperty("Socket_Port", "8888"))
-                            .replaceAll("\\{\\{API_LABEL1}}", apiData[0])
-                            .replaceAll("\\{\\{API_LABEL2}}", apiData[1])
-                            .replaceAll("\\{\\{API_TEMP}}", apiData[2])
-                            .replaceAll("\\{\\{API_HUM}}", apiData[3])
-                            .replaceAll("\\{\\{API_PRES}}", apiData[4])
+                        String.format(
+                            "{\"temp\":\"%s\",\"hum\":\"%s\",\"pres\":\"%s\",\"port\":%s}",
+                            String.valueOf(ds.getTemperature()),
+                            String.valueOf(ds.getHumidity()),
+                            String.valueOf(ds.getPressure()),
+                            conf.getProperty("Socket_Port", "8888")
+                        )
                     );
+                } else {
+                    APIType type = getAPIType(typeParam);
+                    String[] apiData = api.handle(type);
+
+                    bw.println(
+                        String.format(
+                            "{\"format\":\"%s\",\"label1\":%s,\"label2\":%s,\"data\":[%s,%s,%s]}",
+                            getFormat(type),
+                            apiData[0],
+                            apiData[1],
+                            apiData[2],
+                            apiData[3],
+                            apiData[4]
+                        )
+                    );
+                }
             }
         } else {
             try (InputStream is = TempMonitor.class.getResourceAsStream(TempMonitor.HTTP_SOURCE + target);
@@ -91,6 +94,17 @@ public class HTTPHandler extends AbstractHandler {
         
         String ext = path.substring(index + 1);
         return mime.get(ext);
+    }
+
+    private String getFormat(APIType type) {
+        switch (type) {
+            default:
+            case HOUR: return conf.getProperty("Format_Hour");
+            case DAY: return conf.getProperty("Format_Day");
+            case MONTH: return conf.getProperty("Format_Month");
+            case YEAR: return conf.getProperty("Format_Year");
+            case RECORD: return conf.getProperty("Format_Record");
+        }
     }
     
     private APIType getAPIType(String param) {
