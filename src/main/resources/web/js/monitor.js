@@ -1,50 +1,3 @@
-var charts = {};
-drawGraphs();
-
-getJSON(
-  "",
-  function (res) {
-    setData(res.temp, res.hum, res.pres);
-
-    var port = res.port;
-    var protocol, addr;
-    if (location.hostname === "monitor.siketyan.me") {
-      protocol = "wss://";
-      addr ="/socket";
-    } else {
-      protocol = "ws://";
-      addr = ":" + port + "/";
-    }
-
-    var con = new WebSocket(protocol + location.hostname + addr);
-    con.onmessage = function (e) {
-      if (e.data === "update") {
-        updateGraphs();
-      } else {
-        var data = e.data.split(",");
-        setData(data[0], data[1], data[2]);
-
-        var chart = charts["realtime"];
-        chart.data.datasets[0].data.push(data[0]);
-        chart.data.datasets[1].data.push(data[1]);
-        chart.data.datasets[2].data.push(data[2]);
-
-        var length = chart.data.datasets[0].data.length;
-        if (length > 61) {
-          chart.data.datasets[0].data.shift();
-          chart.data.datasets[1].data.shift();
-          chart.data.datasets[2].data.shift();
-        } else {
-          chart.data.labels.unshift(periods[length - 1]);
-          chart.data.labels.pop();
-        }
-
-        chart.update();
-      }
-    };
-  }
-);
-
 var periods = [
   "Now", "", "", "", "", "", "", "","", "",
   "10s", "", "", "", "", "", "", "","", "",
@@ -124,6 +77,53 @@ var template = {
   }
 };
 
+var charts = {};
+drawGraphs();
+
+getJSON(
+  "",
+  function (res) {
+    setData(res.temp, res.hum, res.pres);
+
+    var port = res.port;
+    var protocol, addr;
+    if (location.hostname === "monitor.siketyan.me") {
+      protocol = "wss://";
+      addr ="/socket";
+    } else {
+      protocol = "ws://";
+      addr = ":" + port + "/";
+    }
+
+    var con = new WebSocket(protocol + location.hostname + addr);
+    con.onmessage = function (e) {
+      if (e.data === "update") {
+        updateGraphs();
+      } else {
+        var data = e.data.split(",");
+        setData(data[0], data[1], data[2]);
+
+        var chart = charts["realtime"];
+        chart.data.datasets[0].data.push(data[0]);
+        chart.data.datasets[1].data.push(data[1]);
+        chart.data.datasets[2].data.push(data[2]);
+
+        var length = chart.data.datasets[0].data.length;
+        if (length > 61) {
+          chart.data.datasets[0].data.shift();
+          chart.data.datasets[1].data.shift();
+          chart.data.datasets[2].data.shift();
+        } else {
+          chart.data.labels.unshift(periods[length - 1]);
+          chart.data.labels.pop();
+        }
+
+        chart.update();
+      }
+    };
+  }
+);
+
 function setData(temp, hum, pres) {
   var tempPeriod = temp.indexOf(".");
   $("#tl").text(temp.substring(0, tempPeriod));
@@ -173,16 +173,25 @@ function drawGraphs() {
 }
 
 function drawGraph(type) {
+  var obj = $.extend(true, {}, template);
   if (type === "realtime") {
-    var obj = $.extend(true, {}, template);
-    obj.data.labels = new Array(61);
-    obj.options.animation.duration = 0;
+    obj.data.labels = new Array(61)
+    obj.options.animation = {
+      duration: 0
+    };
+    obj.options.scales.xAxes = [
+      {
+        ticks: {
+          autoSkip: false
+        }
+      }
+    ];
+
     charts[type] = new Chart($("#graph-realtime"), obj);
   } else {
     getJSON(
       "?type=" + type,
       function (res) {
-        var obj = $.extend(true, {}, template);
         var format = res.format;
         obj.data.datasets[0].data = res.data[0];
         obj.data.datasets[1].data = res.data[1];
