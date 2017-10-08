@@ -28,11 +28,6 @@ public class HTTPHandler extends AbstractHandler {
         mime.put("ico", "image/x-icon");
         mime.put("png", "image/png");
         mime.put("svg", "image/svg+xml");
-        mime.put("otf", "font/otf");
-        mime.put("ttf", "font/ttf");
-        mime.put("woff", "font/woff");
-        mime.put("woff2", "font/woff2");
-        mime.put("eot", "application/vnd.ms-fontobject");
         mime.put("xml", "application/xml");
         
         conf = TempMonitor.getConfig();
