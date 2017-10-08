@@ -41,11 +41,6 @@ public class HTTPHandler extends AbstractHandler {
         String mime = getMIME(target);
         DataSet ds = TempMonitor.getSensor().getData();
         res.setContentType(mime + ";charset=utf-8");
-        
-        if (TempMonitor.class.getResource(TempMonitor.HTTP_SOURCE + target) == null || mime.equals("")) {
-            res.setStatus(404);
-            return;
-        }
 
         if (target.startsWith("/api.json")) {
             try (PrintWriter bw = res.getWriter()) {
@@ -79,6 +74,11 @@ public class HTTPHandler extends AbstractHandler {
                 }
             }
         } else {
+            if (TempMonitor.class.getResource(TempMonitor.HTTP_SOURCE + target) == null || mime.equals("")) {
+                res.setStatus(404);
+                return;
+            }
+
             try (InputStream is = TempMonitor.class.getResourceAsStream(TempMonitor.HTTP_SOURCE + target);
                  OutputStream os = res.getOutputStream()) {
                 byte[] buf = new byte[1000];
