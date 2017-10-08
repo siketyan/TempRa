@@ -6,7 +6,16 @@ drawGraph("day");
 drawGraph("month");
 drawGraph("year");
 
-var con = new WebSocket("ws://" + location.hostname + ":{{SOCKET_PORT}}/");
+var protocol, addr;
+if (location.hostname === "monitor.siketyan.me") {
+  protocol = "wss://";
+  addr ="/socket";
+} else {
+  protocol = "ws://";
+  addr = ":{{SOCKET_PORT}}/";
+}
+
+var con = new WebSocket(protocol + location.hostname + addr);
 con.onmessage = function(e) {
   var data = e.data.split(",");
   setData(data[0], data[1], data[2]);
