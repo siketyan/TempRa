@@ -2,6 +2,7 @@ package io.github.siketyan.monitor.task;
 
 import io.github.siketyan.monitor.TempMonitor;
 import io.github.siketyan.monitor.object.DataSet;
+import io.github.siketyan.monitor.socket.SessionManager;
 import io.github.siketyan.monitor.util.ISensor;
 import io.github.siketyan.monitor.util.Logger;
 import io.github.siketyan.monitor.util.SQLManager;
@@ -71,6 +72,12 @@ public class CronTask implements Runnable {
                     + data.getHumidity() + ", "
                     + data.getPressure()
             );
+
+            /*
+                Graphs update
+             */
+
+            SessionManager.getInstance().broadcast("update");
             
             /*
                 Twitter (once of a hour)

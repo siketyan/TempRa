@@ -15,17 +15,18 @@ getJSON(
 
     var con = new WebSocket(protocol + location.hostname + addr);
     con.onmessage = function (e) {
-      var data = e.data.split(",");
-      setData(data[0], data[1], data[2]);
+      if (e.data === "update") {
+        updateGraphs();
+      } else {
+        var data = e.data.split(",");
+        setData(data[0], data[1], data[2]);
+      }
     };
   }
 );
 
-drawGraph("record");
-drawGraph("hour");
-drawGraph("day");
-drawGraph("month");
-drawGraph("year");
+var charts = {};
+drawGraphs();
 
 var template = {
   type: "line",
@@ -107,6 +108,39 @@ function setData(temp, hum, pres) {
   $("#ps").text(pres.substring(presPeriod, 7) + " hPa");
 }
 
+function updateGraphs() {
+  updateGraph("record");
+  updateGraph("hour");
+  updateGraph("day");
+  updateGraph("month");
+  updateGraph("year");
+}
+
+function updateGraph(type) {
+  getJSON(
+    "?type=" + type,
+    function (res) {
+      var chart = charts[type];
+      var format = res.format;
+      chart.data.datasets[0].data = res.data[0];
+      chart.data.datasets[1].data = res.data[1];
+      chart.data.datasets[2].data = res.data[2];
+      chart.data.labels = [];
+
+      addLabels(type, format, res.label1, res.label2, chart.data.labels);
+      chart.update();
+    }
+  );
+}
+
+function drawGraphs() {
+  drawGraph("record");
+  drawGraph("hour");
+  drawGraph("day");
+  drawGraph("month");
+  drawGraph("year");
+}
+
 function drawGraph(type) {
   getJSON(
     "?type=" + type,
@@ -117,20 +151,23 @@ function drawGraph(type) {
       obj.data.datasets[1].data = res.data[1];
       obj.data.datasets[2].data = res.data[2];
 
-      for (var i = 0; i < res.label1.length; i++) {
-        var label1 = res.label1[i];
-        var label2 = res.label2[i];
-        if (type === "record" && label2 === 0) label2 = "00";
-
-        obj.data.labels.push(
-          format.replace("{{STR1}}", String(label1))
-                .replace("{{STR2}}", String(label2))
-        );
-      }
-
-      new Chart($("#graph-" + type), obj);
+      addLabels(type, format, res.label1, res.label2, obj.data.labels);
+      charts[type] = new Chart($("#graph-" + type), obj);
     }
   );
+}
+
+function addLabels(type, format, labels1, labels2, labels) {
+  for (var i = 0; i < labels1.length; i++) {
+    var label1 = labels1[i];
+    var label2 = labels2[i];
+    if (type === "record" && label2 === 0) label2 = "00";
+
+    labels.push(
+      format.replace("{{STR1}}", String(label1))
+            .replace("{{STR2}}", String(label2))
+    );
+  }
 }
 
 function getJSON(query, response) {
