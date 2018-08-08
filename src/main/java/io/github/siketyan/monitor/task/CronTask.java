@@ -157,13 +157,11 @@ public class CronTask implements Runnable {
                 stmt.setInt(1, cal.get(Calendar.YEAR));
                 stmt.setInt(2, cal.get(Calendar.MONTH) + 1);
                 stmt.setInt(3, cal.get(Calendar.DATE));
-        
-                try (ResultSet rs = stmt.executeQuery()) {
-                    rs.next();
-                    dTemp = rs.getDouble("temp");
-                    dHum = rs.getDouble("hum");
-                    dPres = rs.getDouble("pres");
-                }
+
+                DataSet set = getDataSetFromStatement(stmt);
+                dTemp = set.getTemperature();
+                dHum = set.getHumidity();
+                dPres = set.getPressure();
             }
     
             try (PreparedStatement stmt = sql.getPreparedStatement(PDAY_INSERT)) {
@@ -193,13 +191,11 @@ public class CronTask implements Runnable {
             try (PreparedStatement stmt = sql.getPreparedStatement(PMONTH_SELECT)) {
                 stmt.setInt(1, cal.get(Calendar.YEAR));
                 stmt.setInt(2, cal.get(Calendar.MONTH) + 1);
-        
-                try (ResultSet rs = stmt.executeQuery()) {
-                    rs.next();
-                    mTemp = rs.getDouble("temp");
-                    mHum = rs.getDouble("hum");
-                    mPres = rs.getDouble("pres");
-                }
+
+                DataSet set = getDataSetFromStatement(stmt);
+                mTemp = set.getTemperature();
+                mHum = set.getHumidity();
+                mPres = set.getPressure();
             }
     
             try (PreparedStatement stmt = sql.getPreparedStatement(PMONTH_INSERT)) {
@@ -228,12 +224,10 @@ public class CronTask implements Runnable {
             try (PreparedStatement stmt = sql.getPreparedStatement(PYEAR_SELECT)) {
                 stmt.setInt(1, cal.get(Calendar.YEAR));
         
-                try (ResultSet rs = stmt.executeQuery()) {
-                    rs.next();
-                    yTemp = rs.getDouble("temp");
-                    yHum = rs.getDouble("hum");
-                    yPres = rs.getDouble("pres");
-                }
+                DataSet set = getDataSetFromStatement(stmt);
+                yTemp = set.getTemperature();
+                yHum = set.getHumidity();
+                yPres = set.getPressure();
             }
     
             try (PreparedStatement stmt = sql.getPreparedStatement(PYEAR_INSERT)) {
@@ -251,6 +245,18 @@ public class CronTask implements Runnable {
         } catch (SQLException e) {
             Logger.error("Failed SQL operation.");
             e.printStackTrace();
+        }
+    }
+
+    private DataSet getDataSetFromStatement(PreparedStatement stmt) throws SQLException {
+        try (ResultSet rs = stmt.executeQuery()) {
+            rs.next();
+
+            return new DataSet(
+                rs.getDouble("temp"),
+                rs.getDouble("hum"),
+                rs.getDouble("pres")
+            );
         }
     }
 }
