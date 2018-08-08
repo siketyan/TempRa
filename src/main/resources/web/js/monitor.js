@@ -87,7 +87,7 @@ getJSON(
 
         var port = res.port;
         var protocol, addr;
-        if (location.hostname === "monitor.siketyan.me") {
+        if (location.hostname === "tempra.sikeserver.com") {
             protocol = "wss://";
             addr = "/socket";
         } else {
