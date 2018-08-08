@@ -217,7 +217,7 @@ public class CronTask implements Runnable {
              */
     
             cal.setTime(now);
-            if (cal.get(Calendar.MONTH) != 0) return;
+            if (cal.get(Calendar.MONTH) != 1) return;
             double yTemp, yHum, yPres;
             cal.add(Calendar.YEAR, -1);
     
