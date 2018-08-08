@@ -85,10 +85,10 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <finalName>TempMonitor-${project.version}-jar-with-dependencies</finalName>
+                            <finalName>TempRa-${project.version}-jar-with-dependencies</finalName>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>io.github.siketyan.monitor.TempMonitor</mainClass>
+                                    <mainClass>io.github.siketyan.monitor.TempRa</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

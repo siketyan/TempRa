@@ -1,6 +1,6 @@
 package io.github.siketyan.monitor.http;
 
-import io.github.siketyan.monitor.TempMonitor;
+import io.github.siketyan.monitor.TempRa;
 import io.github.siketyan.monitor.object.APIType;
 import io.github.siketyan.monitor.util.SQLManager;
 
@@ -25,7 +25,7 @@ class APIHandler {
     private SQLManager sql;
     
     APIHandler() {
-        sql = TempMonitor.getSQL();
+        sql = TempRa.getSQL();
     }
     
     String[] handle(APIType type) {

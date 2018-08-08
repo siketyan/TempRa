@@ -1,6 +1,6 @@
 package io.github.siketyan.monitor.task;
 
-import io.github.siketyan.monitor.TempMonitor;
+import io.github.siketyan.monitor.TempRa;
 import io.github.siketyan.monitor.object.DataSet;
 import io.github.siketyan.monitor.socket.SessionManager;
 import io.github.siketyan.monitor.util.ISensor;
@@ -9,7 +9,7 @@ public class SocketTask implements Runnable {
     private ISensor sensor;
     
     public SocketTask() {
-        this.sensor = TempMonitor.getSensor();
+        this.sensor = TempRa.getSensor();
     }
     
     @Override

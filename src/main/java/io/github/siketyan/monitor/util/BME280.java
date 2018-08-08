@@ -171,12 +171,7 @@ public class BME280 implements ISensor {
                 humidity = 0.0;
             }
             
-            DataSet ds = new DataSet();
-            ds.setTemperature(temp);
-            ds.setHumidity(humidity);
-            ds.setPressure(pressure);
-            
-            return ds;
+            return new DataSet(temp, humidity, pressure);
         } catch (Exception e) {
             Logger.error("Failed to get data.");
             e.printStackTrace();

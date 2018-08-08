@@ -1,6 +1,6 @@
 package io.github.siketyan.monitor.task;
 
-import io.github.siketyan.monitor.TempMonitor;
+import io.github.siketyan.monitor.TempRa;
 import io.github.siketyan.monitor.object.DataSet;
 import io.github.siketyan.monitor.socket.SessionManager;
 import io.github.siketyan.monitor.util.ISensor;
@@ -38,8 +38,8 @@ public class CronTask implements Runnable {
     private SQLManager sql;
     
     public CronTask() {
-        this.sensor = TempMonitor.getSensor();
-        this.sql = TempMonitor.getSQL();
+        this.sensor = TempRa.getSensor();
+        this.sql = TempRa.getSQL();
     }
     
     @Override
@@ -87,16 +87,16 @@ public class CronTask implements Runnable {
             if (cal.get(Calendar.MINUTE) != 0) return;
             
             try {
-                TempMonitor.getTwitter().updateStatus(
+                TempRa.getTwitter().updateStatus(
                     new StatusUpdate(
-                        TempMonitor.getConfig().getProperty("Twitter_Content")
+                        TempRa.getConfig().getProperty("Twitter_Content")
                                    .replaceAll("\\{\\{TEMP}}", String.valueOf(data.getTemperature()).substring(0, 13))
                                    .replaceAll("\\{\\{HUM}}", String.valueOf(data.getHumidity()).substring(0, 13))
                                    .replaceAll("\\{\\{PRES}}", String.valueOf(data.getPressure()).substring(0, 13))
                                    .replaceAll(
                                         "\\{\\{DATE}}",
                                         new SimpleDateFormat(
-                                            TempMonitor.getConfig().getProperty("Twitter_DateFormat")
+                                            TempRa.getConfig().getProperty("Twitter_DateFormat")
                                         ).format(now)
                                     )
                     )

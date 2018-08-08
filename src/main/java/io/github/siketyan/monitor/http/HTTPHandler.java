@@ -1,6 +1,6 @@
 package io.github.siketyan.monitor.http;
 
-import io.github.siketyan.monitor.TempMonitor;
+import io.github.siketyan.monitor.TempRa;
 import io.github.siketyan.monitor.object.APIType;
 import io.github.siketyan.monitor.object.DataSet;
 import org.eclipse.jetty.server.Request;
@@ -30,7 +30,7 @@ public class HTTPHandler extends AbstractHandler {
         mime.put("svg", "image/svg+xml");
         mime.put("xml", "application/xml");
         
-        conf = TempMonitor.getConfig();
+        conf = TempRa.getConfig();
         api = new APIHandler();
     }
     
@@ -39,7 +39,7 @@ public class HTTPHandler extends AbstractHandler {
                        HttpServletResponse res) throws IOException, ServletException {
         if (target.equals("/")) target = "/index.html";
         String mime = getMIME(target);
-        DataSet ds = TempMonitor.getSensor().getData();
+        DataSet ds = TempRa.getSensor().getData();
         res.setContentType(mime + ";charset=utf-8");
 
         if (target.startsWith("/api.json")) {
@@ -74,12 +74,12 @@ public class HTTPHandler extends AbstractHandler {
                 }
             }
         } else {
-            if (TempMonitor.class.getResource(TempMonitor.HTTP_SOURCE + target) == null || mime.equals("")) {
+            if (TempRa.class.getResource(TempRa.HTTP_SOURCE + target) == null || mime.equals("")) {
                 res.setStatus(404);
                 return;
             }
 
-            try (InputStream is = TempMonitor.class.getResourceAsStream(TempMonitor.HTTP_SOURCE + target);
+            try (InputStream is = TempRa.class.getResourceAsStream(TempRa.HTTP_SOURCE + target);
                  OutputStream os = res.getOutputStream()) {
                 byte[] buf = new byte[1000];
                 for (int nChunk = is.read(buf); nChunk != -1; nChunk = is.read(buf))
