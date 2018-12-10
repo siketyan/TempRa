@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.siketyan</groupId>
     <artifactId>monitor</artifactId>
-    <version>1.2</version>
+    <version>1.3</version>
     <dependencies>
         <dependency>
             <groupId>com.pi4j</groupId>
@@ -30,22 +30,22 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-server</artifactId>
-            <version>9.4.7.v20170914</version>
+            <version>9.4.14.v20181114</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
-            <version>9.4.7.v20170914</version>
+            <version>9.4.14.v20181114</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty.websocket</groupId>
             <artifactId>websocket-server</artifactId>
-            <version>9.4.7.v20170914</version>
+            <version>9.4.14.v20181114</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.jetty.websocket</groupId>
             <artifactId>websocket-servlet</artifactId>
-            <version>9.4.7.v20170914</version>
+            <version>9.4.14.v20181114</version>
         </dependency>
     </dependencies>
     <build>
@@ -85,10 +85,10 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <finalName>TempMonitor-${project.version}-jar-with-dependencies</finalName>
+                            <finalName>TempRa-${project.version}-jar-with-dependencies</finalName>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>io.github.siketyan.monitor.TempMonitor</mainClass>
+                                    <mainClass>io.github.siketyan.monitor.TempRa</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

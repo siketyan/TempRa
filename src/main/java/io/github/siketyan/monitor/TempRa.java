@@ -19,7 +19,7 @@ import java.io.*;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class TempMonitor {
+public class TempRa {
     public static final String HTTP_SOURCE = "/web";
     private static final String CONFIG_FILE = "monitor.properties";
     private static final Class<? extends ISensor> SENSOR_TYPE = BME280.class;

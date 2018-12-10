@@ -1,6 +1,6 @@
 package io.github.siketyan.monitor.socket;
 
-import io.github.siketyan.monitor.TempMonitor;
+import io.github.siketyan.monitor.TempRa;
 import io.github.siketyan.monitor.task.SocketTask;
 import io.github.siketyan.monitor.util.Logger;
 
@@ -27,7 +27,7 @@ public class SessionManager {
             future = scheduler.scheduleWithFixedDelay(
                          task, 0,
                          Integer.parseInt(
-                             TempMonitor.getConfig()
+                             TempRa.getConfig()
                                         .getProperty("Socket_Interval", "1000")
                          ),
                          TimeUnit.MILLISECONDS

@@ -1,4 +1,4 @@
-# TempMonitor
+# TempRa
 Monitors the temperature, the humidity and the pressure in your room on Raspberry Pi.
 
 ## Features
